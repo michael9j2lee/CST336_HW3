@@ -8,26 +8,35 @@
 //========================================
 
 
-$("#cats").on("submit",function(event) {
-   $("#catFact").html("meow");
-   
+$("#pokemon").on("submit",function(event) {
+    
+   let inputPokemon = document.getElementById("inputPokemon").value;
+   let inputURL = "https://pokeapi.co/api/v2/pokemon/"+inputPokemon;
+//   alert(inputPokemon);
+//   alert(inputURL);
     $.ajax({
-                 url: "https://pokeapi.co/api/v2/pokemon/ditto/",
-            headers: { "Accept": "application/json"},
-            type: 'GET',
-            dataType: "jsonp",
+                 url: inputURL,
+            headers: { "Accept": "application/json",
+            "Access-Control-Allow-origin": "*"
+            },
+            dataType: "json",
             crossDomain: true,
             beforeSend: function(xhr){
                 xhr.withCredentials = true;
           },
             success: function(result) {
-                alert("meow");
-                let len = result.length;
-                let num = genRandomNumber(len);
-                alert(result[num]);
+                //alert(result.moves[0].move.name);
+                let outputTable = createTable(result);
+                //alert(outputTable);
                 
-                $("#catFact").html(result[num]);
-                 
+                $("#infoTable").html('<table class="table table-dark">'+outputTable +'</table>');
+                //document.write('<table>'+outputTable +'</table>');
+                // for (let i = 0; i<= outMoves.length; i++){
+                //     allMoves+=result.moves[i].move.name;
+                //     $("#moves").html(result.moves[i].move.name);
+                // }
+                //alert(allMoves);
+                
                  //document.getElementById("pokeSprite").src=result.sprite.backdefault;
             },
             error: function(obj,textStatus,errorThrown){
@@ -39,9 +48,32 @@ $("#cats").on("submit",function(event) {
         event.preventDefault();
     });
 
-function genRandomNumber(inputNum){
-    return Math.floor(Math.random() * inputNum) ; 
-}
+    function createTable(result){
+        //alert("creating table");
+        var outMoves = result.moves;
+        var table = '';
+        var rows = outMoves.length;
+        var level = 0;
+        
+        table+= '<tr><th>Moves</th><th>Level Learned at </th></tr>';
+        for (let r= 0; r< rows; r++) {
+            level = outMoves[r].version_group_details[0].level_learned_at;
+            if (level !=0){
+                table+='<tr>';
+                table+= '<td>' + outMoves[r].move.name + '</td>';
+                table+= '<td>' + outMoves[r].version_group_details[0].level_learned_at +'</td>';
+                table+='</tr>';
+            }
+
+        }
+        return table;
+    }
+        
+    
+
+// function genRandomNumber(inputNum){
+//     return Math.floor(Math.random() * inputNum) ; 
+// }
 
 
 //==================================================
