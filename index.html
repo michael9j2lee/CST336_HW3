@@ -9,16 +9,29 @@
     </head>
     
     <body>
-        <br></br>
-        <h1>Get Pokemon Stats!</h1>
-        <form id="pokemon" method="get" >
-        <input type="text" id="inputPokemon">
-        <span id="moves"></span>
-        <!--<img src="ditto.png" id="sprite">-->
-        <input type="submit" id="pokemon">
-        <span id = "infoTable"></span>
-        
-        </form>
+        <div id= "centering">
+            <h1>Get Pokemon Moves</h1>
+            <img class ="img-rounded" src="img/pokeball.jpg"
+            
+            <br>
+            <form id="pokemon" method="get" >
+                <br>
+                <h3>Enter a Pokemon or ID</h3>
+                <br></br>
+                <div>
+                    <h4>Try These: Ditto ,Pikachu ,1 , 123</h4>
+                </div>
+                <input type="text" id="inputPokemon">
+                
+                <input type="submit" id="pokemon">
+                <br><br>
+                <h2 id="pokeName"></h2>
+                <br>
+                <span id="errorCheck"> </span>
+                <span id = "infoTable"></span>
+            
+            </form>
+        </div>
 
         
         <script type="text/javascript" src = "js/script.js"></script>
